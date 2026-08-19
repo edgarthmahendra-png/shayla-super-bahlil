@@ -267,6 +267,7 @@ const dialogueBox = document.getElementById("dialogueBox");
 const speaker = document.getElementById("speaker");
 const dialogueText = document.getElementById("dialogueText");
 const dialogueNext = document.getElementById("dialogueNext");
+const touchControls = document.getElementById("touchControls");
 
 // Mengubah Tampilan Menu Utama & Elemen UI Menjadi Tema Pink Soft Romantic
 if (titleScreen) {
@@ -300,6 +301,23 @@ styleSheet.innerText = `
   }
 `;
 document.head.appendChild(styleSheet);
+
+// ============================================================
+// HELPER SHOW / HIDE TOUCH CONTROLS
+// ============================================================
+
+function hideTouchControls() {
+  if (touchControls) {
+    touchControls.style.setProperty("display", "none", "important");
+  }
+}
+
+function showTouchControls() {
+  if (touchControls) {
+    // Kembalikan ke null agar styling responsive @media di style.css mengambil alih lagi
+    touchControls.style.display = "";
+  }
+}
 
 // ============================================================
 // CANVAS & RESIZE
@@ -734,6 +752,10 @@ function startDialogue(type) {
   activeDialogueType = type;
   dialogueIndex = 0;
   kafkaEndingDialogueIndex = 0;
+  
+  // Sembunyikan kontrol HP saat dialog dimulai agar tidak menutupi dialog & tombol Next
+  hideTouchControls();
+  
   dialogueBox.classList.remove("hidden");
   showDialogue();
 }
@@ -781,6 +803,8 @@ dialogueNext.addEventListener("click", () => {
     dialogueIndex++;
     if (dialogueIndex >= dialogues.length) {
       dialogueBox.classList.add("hidden");
+      // Tampilkan kembali tombol HP saat dialog selesai
+      showTouchControls();
       startGame();
       return;
     }
@@ -789,6 +813,8 @@ dialogueNext.addEventListener("click", () => {
     kafkaEndingDialogueIndex++;
     if (kafkaEndingDialogueIndex >= kafkaEndingDialogues.length) {
       dialogueBox.classList.add("hidden");
+      // Tampilkan kembali tombol HP
+      showTouchControls();
       cutscenePhase = "endingWalk";
       fadeState = "fadeIn";
       return;
@@ -798,6 +824,8 @@ dialogueNext.addEventListener("click", () => {
     kafkaEndingDialogueIndex++;
     if (kafkaEndingDialogueIndex >= doorEndingDialogues.length) {
       dialogueBox.classList.add("hidden");
+      // Tampilkan kembali tombol HP jika diperlukan
+      showTouchControls();
       cutscenePhase = "doorOpen";
       doorOpen = true;
       return;
@@ -1042,6 +1070,7 @@ function update() {
       endingWalkTimer = 0;
       cutscenePhase = "letter";
       letterVisible = true;
+      hideTouchControls(); // Sembunyikan kontrol HP juga saat menampilkan surat ending
     }
     return;
   }
