@@ -1605,8 +1605,8 @@ function drawLetter() {
 
   ctx.font = "15px Arial";
   ctx.fillText("Gimana?? seru gaa?", canvas.width / 2, y + 125);
-  ctx.fillText("Maaf sedikit ada kesalahan", canvas.width / 2, y + 150);
-  ctx.fillText("— Kafka, suratnya terpisahh", canvas.width / 2, y + 195);
+  ctx.fillText("Maaf kalo rada error", canvas.width / 2, y + 150);
+  ctx.fillText("LOVEYOU CANTIKK, HEHEHE", canvas.width / 2, y + 195);
 
   ctx.textAlign = "left";
   cutscenePhase = "done";
